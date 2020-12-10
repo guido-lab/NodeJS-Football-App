@@ -25,6 +25,7 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 8081;
 
 require("./app/routes/players.routes")(app);
+require("./app/routes/teams.routes")(app);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
