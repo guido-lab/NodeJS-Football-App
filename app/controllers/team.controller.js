@@ -1,8 +1,8 @@
 const db = require("../models");
-const Teams = db.teams;
+const Team = db.team;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Teams
+// Create and Save a new Team
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.name) {
@@ -12,7 +12,7 @@ exports.create = (req, res) => {
       return;
     }
 
-    // Create a Teams
+    // Create a Team
     const team = {
       name: req.body.name,
       description: req.body.description,
@@ -22,8 +22,8 @@ exports.create = (req, res) => {
       deleted: req.body.deleted ? req.body.deleted : false
     };
   
-    // Save Teams in the database
-    Teams.create(team)
+    // Save Team in the database
+    Team.create(team)
       .then(data => {
         res.send(data);
       })
@@ -35,115 +35,115 @@ exports.create = (req, res) => {
       });
   };
 
-// Retrieve all Teams from the database.
+// Retrieve all Team from the database.
 exports.findAll = (req, res) => {
     const name = req.query.name;
     var condition = name ? { name: { [Op.iLike]: `%${name}%` } } : null;
   
-    Teams.findAll({ where: condition })
+    Team.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving teams."
+            err.message || "Some error occurred while retrieving team."
         });
       });
   };
 
-// Find a single Teams with an id
+// Find a single Team with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
   
-    Teams.findByPk(id)
+    Team.findByPk(id)
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Teams with id=" + id
+          message: "Error retrieving Team with id=" + id
         });
       });
   };
 
-// Update a Teams by the id in the request
+// Update a Team by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
   
-    Teams.update(req.body, {
+    Team.update(req.body, {
       where: { id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Teams was updated successfully."
+            message: "Team was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Teams with id=${id}. Maybe Teams was not found or req.body is empty!`
+            message: `Cannot update Team with id=${id}. Maybe Team was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Teams with id=" + id
+          message: "Error updating Team with id=" + id
         });
       });
   };
 
-// Delete a Teams with the specified id in the request
+// Delete a Team with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
   
-    Teams.destroy({
+    Team.destroy({
       where: { id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Teams was deleted successfully!"
+            message: "Team was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete Teams with id=${id}. Maybe Teams was not found!`
+            message: `Cannot delete Team with id=${id}. Maybe Team was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Teams with id=" + id
+          message: "Could not delete Team with id=" + id
         });
       });
   };
 
-// Delete all Teams from the database.
+// Delete all Team from the database.
 exports.deleteAll = (req, res) => {
-    Teams.destroy({
+    Team.destroy({
       where: {},
       truncate: false
     })
       .then(nums => {
-        res.send({ message: `${nums} Teams were deleted successfully!` });
+        res.send({ message: `${nums} Team were deleted successfully!` });
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while removing all teams."
+            err.message || "Some error occurred while removing all team."
         });
       });
   };
 
-// Find all published Teams
+// Find all published Team
 exports.findAllActive = (req, res) => {
-    Teams.findAll({ where: { deleted: false } })
+    Team.findAll({ where: { deleted: false } })
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving teams."
+            err.message || "Some error occurred while retrieving team."
         });
       });
   };

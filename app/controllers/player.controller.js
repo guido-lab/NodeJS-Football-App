@@ -1,8 +1,8 @@
 const db = require("../models");
-const Players = db.players;
+const player = db.player;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Players
+// Create and Save a new player
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.name || !req.body.last_name) {
@@ -12,8 +12,8 @@ exports.create = (req, res) => {
       return;
     }
   
-    // Create a Players
-    const players = {
+    // Create a player
+    const player_data = {
       name: req.body.name,
       last_name: req.body.last_name,
       dob: req.body.dob,
@@ -21,8 +21,8 @@ exports.create = (req, res) => {
       deleted: req.body.deleted ? req.body.deleted : false
     };
   
-    // Save Players in the database
-    Players.create(players)
+    // Save player in the database
+    player.create(player_data)
       .then(data => {
         res.send(data);
       })
@@ -34,115 +34,115 @@ exports.create = (req, res) => {
       });
   };
 
-// Retrieve all Players from the database.
+// Retrieve all player from the database.
 exports.findAll = (req, res) => {
     const name = req.query.name;
     var condition = name ? { name: { [Op.iLike]: `%${name}%` } } : null;
   
-    Players.findAll({ where: condition })
+    player.findAll({ where: condition })
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving players."
+            err.message || "Some error occurred while retrieving player."
         });
       });
   };
 
-// Find a single Players with an id
+// Find a single player with an id
 exports.findOne = (req, res) => {
     const id = req.params.id;
   
-    Players.findByPk(id)
+    player.findByPk(id)
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving Players with id=" + id
+          message: "Error retrieving player with id=" + id
         });
       });
   };
 
-// Update a Players by the id in the request
+// Update a player by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
   
-    Players.update(req.body, {
+    player.update(req.body, {
       where: { id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Players was updated successfully."
+            message: "player was updated successfully."
           });
         } else {
           res.send({
-            message: `Cannot update Players with id=${id}. Maybe Players was not found or req.body is empty!`
+            message: `Cannot update player with id=${id}. Maybe player was not found or req.body is empty!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error updating Players with id=" + id
+          message: "Error updating player with id=" + id
         });
       });
   };
 
-// Delete a Players with the specified id in the request
+// Delete a player with the specified id in the request
 exports.delete = (req, res) => {
     const id = req.params.id;
   
-    Players.destroy({
+    player.destroy({
       where: { id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "Players was deleted successfully!"
+            message: "player was deleted successfully!"
           });
         } else {
           res.send({
-            message: `Cannot delete Players with id=${id}. Maybe Players was not found!`
+            message: `Cannot delete player with id=${id}. Maybe player was not found!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Could not delete Players with id=" + id
+          message: "Could not delete player with id=" + id
         });
       });
   };
 
-// Delete all Players from the database.
+// Delete all player from the database.
 exports.deleteAll = (req, res) => {
-    Players.destroy({
+    player.destroy({
       where: {},
       truncate: false
     })
       .then(nums => {
-        res.send({ message: `${nums} Players were deleted successfully!` });
+        res.send({ message: `${nums} player were deleted successfully!` });
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while removing all players."
+            err.message || "Some error occurred while removing all player."
         });
       });
   };
 
-// Find all published Players
+// Find all published player
 exports.findAllActive = (req, res) => {
-    Players.findAll({ where: { deleted: false } })
+    player.findAll({ where: { deleted: false } })
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving players."
+            err.message || "Some error occurred while retrieving player."
         });
       });
   };

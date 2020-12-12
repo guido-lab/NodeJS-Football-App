@@ -1,18 +1,15 @@
 module.exports = (sequelize, Sequelize) => {
-    const Teams = sequelize.define("teams", {
+    const Player = sequelize.define("player", {
       name: {
         type: Sequelize.STRING
       },
-      description: {
+      last_name: {
         type: Sequelize.STRING
       },
-      date_created: {
+      dob: {
         type: Sequelize.DATE
       },
-      coach: {
-        type: Sequelize.STRING
-      },
-      president: {
+      description: {
         type: Sequelize.STRING
       },
       deleted: {
@@ -20,5 +17,11 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
   
-    return Teams;
+    Player.associate = models => {
+      Player.hasMany(models.playerTeam, {
+        onDelete: "cascade"
+      })
+  }
+
+  return Player;
   };
