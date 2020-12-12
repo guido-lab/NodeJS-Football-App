@@ -27,6 +27,7 @@ const PORT = process.env.PORT || 8081;
 require("./app/routes/player.routes")(app);
 require("./app/routes/team.routes")(app);
 require("./app/routes/playerTeam.routes")(app);
+require("./app/routes/match.routes")(app);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
@@ -34,6 +35,6 @@ app.listen(PORT, () => {
 
 // sync({ force: true })
 const db = require("./app/models");
-db.sequelize.sync({ force: false }).then(() => {
+db.sequelize.sync({ force: true }).then(() => {
     console.log("Drop and re-sync db.");
   });

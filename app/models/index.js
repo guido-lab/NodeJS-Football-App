@@ -22,5 +22,6 @@ db.sequelize = sequelize;
 db.player = require("./player.model.js")(sequelize, Sequelize);
 db.team = require("./team.model.js")(sequelize, Sequelize);
 db.playerTeam = require("./playerTeam.model.js")(sequelize, Sequelize);
+db.match = require("./match.model.js")(sequelize, Sequelize);
 
 module.exports = db;

@@ -20,11 +20,15 @@ module.exports = (sequelize, Sequelize) => {
       }
     });
   
-    Team.associate = models => {
-      Team.hasMany(models.teamPlayer, {
-        onDelete: "cascade"
-      })
+  Team.associate = models => {
+    Team.hasMany(models.teamPlayer, {
+      onDelete: "cascade"
+    })
   }
-
+  Team.associate = models => {
+    Team.hasMany(models.Match, {
+      onDelete: "cascade"
+    })
+  }
     return Team;
   };
