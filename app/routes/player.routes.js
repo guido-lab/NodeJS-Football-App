@@ -4,9 +4,43 @@ module.exports = app => {
     var router = require("express").Router();
   
     // Create a new Tutorial
+/**
+ * @swagger
+ * /api/player:
+ *  post:
+ *    parameters:
+ *      - in: body
+ *        name: player
+ *        description: Use to insert new player
+ *        schema:
+ *          type: object
+ *          required:
+ *            - name
+ *          properties:
+ *            name:
+ *              type: string
+ *            last_name:
+ *              type: string
+ *            dob:
+ *              type: date
+ *            description:
+ *              type: string
+ *    responses:
+ *      201:
+ *        description: Created
+ */
     router.post("/", player.create);
   
     // Retrieve all Tutorials
+/**
+ * @swagger
+ * /api/player:
+ *  get:
+ *    description: Use to get all player
+ *    responses:
+ *      '200':
+ *        description: A successful response
+ */
     router.get("/", player.findAll);
   
     // Retrieve all published Tutorials

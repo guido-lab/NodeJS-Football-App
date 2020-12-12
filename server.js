@@ -5,7 +5,7 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:8082"
 };
 
 app.use(cors(corsOptions));
@@ -22,8 +22,12 @@ app.get("/", (req, res) => {
 });
 
 // set port, listen for requests
-const PORT = process.env.PORT || 8081;
+const PORT = process.env.PORT || 8082;
 
+// Swagger implmentation
+require("./swagger")(app);
+
+// register routes main js File
 require("./app/routes/player.routes")(app);
 require("./app/routes/team.routes")(app);
 require("./app/routes/playerTeam.routes")(app);
@@ -35,6 +39,6 @@ app.listen(PORT, () => {
 
 // sync({ force: true })
 const db = require("./app/models");
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync({ force: false }).then(() => {
     console.log("Drop and re-sync db.");
   });

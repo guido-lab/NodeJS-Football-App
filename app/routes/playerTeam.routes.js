@@ -22,7 +22,7 @@ module.exports = app => {
     router.delete("/:id", team.delete);
   
     // Create a new Tutorial
-    router.delete("/", team.deleteAll);
+    // router.delete("/", team.deleteAll);
   
     app.use('/api/jointeam', router);
   };

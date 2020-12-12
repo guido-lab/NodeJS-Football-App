@@ -36,7 +36,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     const active = req.query.active;
     var condition = active ? { active: { [Op.eq]: `${active}` } } : null;
-  console.log(condition)
+
     playerTeam.findAll({ where: condition })
       .then(data => {
         res.send(data);
@@ -51,15 +51,15 @@ exports.findAll = (req, res) => {
 
 // Find a single playerTeam with an id
 exports.findOne = (req, res) => {
-    const id = req.params.id;
+    const TeamId = req.params.TeamId;
   
-    playerTeam.findByPk(id)
+    playerTeam.findByPk(TeamId)
       .then(data => {
         res.send(data);
       })
       .catch(err => {
         res.status(500).send({
-          message: "Error retrieving playerTeam with id=" + id
+          message: "Error retrieving playerTeam with TeamId=" + TeamId
         });
       });
   };
@@ -114,24 +114,7 @@ exports.delete = (req, res) => {
       });
   };
 
-// Delete all playerTeam from the database.
-exports.deleteAll = (req, res) => {
-    playerTeam.destroy({
-      where: {},
-      truncate: false
-    })
-      .then(nums => {
-        res.send({ message: `${nums} playerTeam were deleted successfully!` });
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while removing all team."
-        });
-      });
-  };
-
-// Find all published playerTeam
+// Find all playerTeam
 exports.findAllActive = (req, res) => {
     playerTeam.findAll({ where: { deleted: false } })
       .then(data => {
