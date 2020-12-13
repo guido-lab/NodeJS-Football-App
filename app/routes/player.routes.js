@@ -49,9 +49,47 @@ module.exports = app => {
     // Retrieve a single Tutorial with id
     router.get("/:id", player.findOne);
   
-    // Update a Tutorial with id
+    // Update a Tutorial passing id
+/**
+ * @swagger
+ * /api/player/{playerId}:
+ *   put:
+ *     summary: Returns a player by ID.
+ *     parameters:
+ *       - in: path
+ *         name: playerId
+ *         description: Use to insert new player
+ *         schema:
+ *           type: object
+ *           required:
+ *             - name
+ *       - in: body
+ *         name: playerId
+ *         description: Use to insert new player
+ *         schema:
+ *           type: object
+ *           required:
+ *             - name
+ *           properties:
+ *             name:
+ *               type: string
+ *             last_name:
+ *               type: string
+ *             dob:
+ *               type: date
+ *             description:
+ *               type: string
+ *     responses:
+ *       200:
+ *         description: OK
+ */
     router.put("/:id", player.update);
+router.put("/:id", player.update);
   
+
+
+
+
     // Delete a Tutorial with id
     router.delete("/:id", player.delete);
   

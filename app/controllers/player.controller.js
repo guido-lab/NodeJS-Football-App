@@ -69,7 +69,7 @@ exports.findOne = (req, res) => {
 // Update a player by the id in the request
 exports.update = (req, res) => {
     const id = req.params.id;
-  
+    console.log(req.body)
     player.update(req.body, {
       where: { id: id }
     })
