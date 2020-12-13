@@ -25,20 +25,20 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 8082;
 
 // Swagger implmentation
-require("../swagger")(app);
+require("./swagger")(app);
 
 // register routes main js File
-require("./routes/player.routes")(app);
-require("./routes/team.routes")(app);
-require("./routes/playerTeam.routes")(app);
-require("./routes/match.routes")(app);
+require("./app/routes/player.routes")(app);
+require("./app/routes/team.routes")(app);
+require("./app/routes/playerTeam.routes")(app);
+require("./app/routes/match.routes")(app);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
 
 // sync({ force: true })
-const db = require("./models");
+const db = require("./app/models");
 db.sequelize.sync({ force: false }).then(() => {
     console.log("Drop and re-sync db.");
   });
